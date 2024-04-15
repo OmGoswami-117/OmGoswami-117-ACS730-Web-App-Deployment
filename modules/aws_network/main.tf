@@ -34,7 +34,18 @@ resource "aws_vpc" "vpc_main" {
   enable_dns_support = true
 }
 
-
+# public subnet in the default VPC
+resource "aws_subnet" "public_subnet" {
+  count             = length(var.public_cidr_blocks)
+  vpc_id            = aws_vpc.vpc_main.id
+  cidr_block        = var.public_cidr_blocks[count.index]
+  availability_zone = data.aws_availability_zones.available.names[count.index]
+  tags = merge(
+    local.default_tags, {
+      Name = "${local.name_prefix}-public-subnet-${count.index}"
+    }
+  )
+}
 
 
 resource "aws_subnet" "private_subnet" {
