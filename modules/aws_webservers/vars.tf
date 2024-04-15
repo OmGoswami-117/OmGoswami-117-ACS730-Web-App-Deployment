@@ -18,7 +18,11 @@ variable "env" {
   type        = string
   description = "Deployment Environment"
 }
-
+#Private Ip of the Admin
+variable "my_private_ip" {
+  type        = string
+  description = "Private IP of the Admin"
+}
 
 
 #Public Ip of the Admin
