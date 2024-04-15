@@ -12,7 +12,7 @@ data "aws_ami" "latest_amazon_linux" {
   }
 }
 
-data "terraform_remote_state" "network" { // This is to use Outputs from Remote State
+data "terraform_remote_state" "network" { 
   backend = "s3"
   config = {
     bucket = "group5-bucket-${var.env}"  // Bucket from where to GET Terraform State
