@@ -9,10 +9,7 @@ variable "prefix" {
   description = "Name prefix"
 }
 
-variable "instance_type" {
-  description = "Type of the instance"
-  type        = string
-}
+
  
 variable "env" {
   type        = string
