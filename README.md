@@ -58,4 +58,7 @@ terraform/webservers/prod-webserver
 After this step, 
 1. Check the EC2 Instances.
 2. In the load balancer, take the public DNS and paste on the web browser, get the desired output.
-3. Try to stop the on instance, instantly new instance will be created automatically. 
+3. Try to stop the on instance, instantly new instance will be created automatically.
+
+For Cleaning process,
+We will use the command "terraform destroy --auto-approve" in all the dev, prod, and staging env of both network and webservers.
