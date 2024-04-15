@@ -4,10 +4,7 @@ variable "default_tags" {
   description = "Default tags to be appliad to all AWS resources"
 }
 
-variable "prefix" {
-  type        = string
-  description = "Name prefix"
-}
+
 
 variable "env" {
   type        = string
