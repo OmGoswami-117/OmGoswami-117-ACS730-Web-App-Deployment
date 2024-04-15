@@ -319,4 +319,12 @@ resource "aws_security_group" "bastion_sg" {
   )
 }
 
-
+# Elastic IP
+resource "aws_eip" "bastion_eip" {
+  instance = aws_instance.bastion.id
+  tags = merge(local.default_tags,
+    {
+      "Name" = "${local.name_prefix}-bastion-eip"
+    }
+  )
+}
