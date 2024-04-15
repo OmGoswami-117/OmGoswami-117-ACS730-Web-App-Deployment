@@ -1,4 +1,3 @@
-# Provision public subnets in custom VPC
 variable "public_subnet_cidrs" {
   default     = ["10.100.1.0/24", "10.100.2.0/24", "10.100.3.0/24"]
   type        = list(string)
