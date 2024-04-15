@@ -9,7 +9,10 @@ variable "prefix" {
   description = "Name prefix"
 }
 
-
+variable "env" {
+  type        = string
+  description = "Deployment Environment"
+}
  
 variable "env" {
   type        = string
