@@ -1,9 +1,9 @@
-# Step 1 - Define the provider
+# the provider
 provider "aws" {
   region = "us-east-1"
 }
 
-# Data source for availability zones in us-east-1
+# availability zones
 data "aws_availability_zones" "available" {
   state = "available"
 }
@@ -12,7 +12,6 @@ module "globalvars" {
   source = "../globalvars"
 }
 
-# Local variables
 locals {
   default_tags = merge(
     module.globalvars.default_tags,
@@ -22,7 +21,7 @@ locals {
   name_prefix = "${local.prefix}-${var.env}"
 }
 
-# Create a new VPC 
+# new VPC 
 resource "aws_vpc" "vpc_main" {
   cidr_block       = var.vpc_cidr
   instance_tenancy = "default"
@@ -37,7 +36,7 @@ resource "aws_vpc" "vpc_main" {
 }
 
 
-# Add provisioning of the public subnetin the default VPC
+# public subnet in the default VPC
 resource "aws_subnet" "public_subnet" {
   count             = length(var.public_cidr_blocks)
   vpc_id            = aws_vpc.vpc_main.id
@@ -62,7 +61,7 @@ resource "aws_subnet" "private_subnet" {
   )
 }
 
-# Create Internet Gateway
+# Internet Gateway
 resource "aws_internet_gateway" "igw" {
 vpc_id = aws_vpc.vpc_main.id
 
@@ -73,7 +72,7 @@ vpc_id = aws_vpc.vpc_main.id
   )
 }
 
-#Create nat gateway
+#nat gateway
 resource "aws_nat_gateway" "nat_gw" {
   allocation_id = aws_eip.nat_eip.id
   subnet_id     = aws_subnet.public_subnet[1].id
@@ -91,7 +90,7 @@ resource "aws_nat_gateway" "nat_gw" {
 }
 
 
-# Route table to route add default gateway pointing to Internet Gateway (IGW)
+# Route table
 resource "aws_route_table" "public_route_table" {
   vpc_id = aws_vpc.vpc_main.id
   route {
@@ -105,7 +104,7 @@ resource "aws_route_table" "public_route_table" {
   )
 }
 
-# Associate subnets with the custom route table
+# the custom route table
 resource "aws_route_table_association" "public_route_table_association" {
   count          = length(aws_subnet.public_subnet[*].id)
   route_table_id = aws_route_table.public_route_table.id
@@ -125,7 +124,7 @@ resource "aws_route_table" "private_route_table" {
   )
 }
 
-# Associate subnets with the custom route table
+# the custom route table
 resource "aws_route_table_association" "private_route_table_association" {
   count          = length(aws_subnet.private_subnet[*].id)
   route_table_id = aws_route_table.private_route_table.id
