@@ -36,7 +36,19 @@ module "globalvars" {
   source = "../globalvars"
 }
 
-
+# Target group
+resource "aws_lb_target_group" "tg" {
+  name     = "tg-${var.env}"
+  port     = 80
+  protocol = "HTTP"
+  vpc_id   = data.terraform_remote_state.network.outputs.vpc_id
+  
+  tags = merge(local.default_tags,
+    {
+      "Name" = "${local.name_prefix}-targetgroup"
+    }
+  )
+}
 
 
 resource "aws_launch_template" "launch_template" {
