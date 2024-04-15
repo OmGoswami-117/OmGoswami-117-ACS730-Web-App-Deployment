@@ -117,7 +117,20 @@ resource "aws_lb" "lb" {
   )
 }
 
+resource "aws_lb" "lb" {
+  name               = "lb-${var.env}"
+  internal           = false
+  load_balancer_type = "application"
+  security_groups    = [aws_security_group.lb_sg.id]
+  subnets            = [data.terraform_remote_state.network.outputs.public_subnet_ids[0], data.terraform_remote_state.network.outputs.public_subnet_ids[1], data.terraform_remote_state.network.outputs.public_subnet_ids[2]]
+  enable_deletion_protection = false
 
+  tags = merge(local.default_tags,
+    {
+      "Name" = "${local.name_prefix}-lb"
+    }
+  )
+}
 # Security Group for Application Load balancer
 resource "aws_security_group" "lb_sg" {
   name        = "lb_sg"
