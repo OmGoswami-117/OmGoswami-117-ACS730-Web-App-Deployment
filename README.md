@@ -6,9 +6,9 @@ Steps:
 1. To Clone the github repo: "git clone https://github.com/OmGoswami-117/OmGoswami-117-ACS730-Web-App-Deployment.git"
 
 2. Then we will create the key in .ssh folder in home/ec2-user (in show hidden files)
-	ssh-keygen -t rsa -f dev-key
-	ssh-keygen -t rsa -f staging-key
-	ssh-keygen -t rsa -f prod-key
+	ssh-keygen -t rsa -f group5-dev
+	ssh-keygen -t rsa -f group5-staging
+	ssh-keygen -t rsa -f group5-prod
 
 3. In S3 Bucket:
    Create 3 Bucket: 
